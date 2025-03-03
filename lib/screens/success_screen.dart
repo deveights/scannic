@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
+import 'package:scannic/widgets/custom_navbar.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen({super.key});
@@ -26,9 +27,15 @@ class SuccessScreen extends StatelessWidget {
               ),
               Consumer<CartProvider>(
                 builder: (context, total, child) {
-                  return Text(
-                    '₱${total.totalAmount}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  return RichText(
+                    text: TextSpan(
+                      text: '₱ ${total.totalAmount}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
+                    ),
                   );
                 },
               ),
@@ -44,7 +51,11 @@ class SuccessScreen extends StatelessWidget {
               ),
               SizedBox(height: 25),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => CustomNavbar()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(size.width, 50),
                   backgroundColor: Colors.red,

@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.all(16),
                 child: Text(
                   textAlign: TextAlign.center,
-                  'Code Scanned: $scannedText',
+                  scannedText,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

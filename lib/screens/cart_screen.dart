@@ -69,11 +69,14 @@ class CartScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      Text(
-                                        '₱${product.price}',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                      RichText(
+                                        text: TextSpan(
+                                          text: '₱ ${product.price}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -165,11 +168,15 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             Spacer(),
-                            Text(
-                              '₱${cart.totalAmount == 0 ? 0 : cart.totalAmount.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            RichText(
+                              text: TextSpan(
+                                text:
+                                    '₱ ${cart.totalAmount == 0 ? 0 : cart.totalAmount.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ],
