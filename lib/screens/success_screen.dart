@@ -65,17 +65,17 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   setState(() {
                     isLoading = true;
                   });
-
-                  Provider.of<CartProvider>(context, listen: false).clearCart();
-
                   await Future.delayed(Duration(seconds: 2));
-
                   if (context.mounted) {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => CustomNavbar()),
+                      (Route<dynamic> route) => false,
                     );
+                    Provider.of<CartProvider>(
+                      context,
+                      listen: false,
+                    ).clearCart();
                   }
-
                   setState(() {
                     isLoading = false;
                   });
