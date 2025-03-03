@@ -65,8 +65,6 @@ class _CustomNavbarState extends State<CustomNavbar> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           HomeScreen(),
-          // CartScreen(),
-          // ItemScreen(),
           Center(child: Text('Recents')),
           Center(child: Text('Favorites')),
           Center(child: Text('User Account')),

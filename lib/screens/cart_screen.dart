@@ -17,13 +17,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart'),
-        scrolledUnderElevation: 0,
-        // forceMaterialTransparency: true,
-        // surfaceTintColor: Colors.transparent,
-        // backgroundColor: Colors.red,
-      ),
+      appBar: AppBar(title: Text('Cart'), scrolledUnderElevation: 0),
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
           return SizedBox(
@@ -32,117 +26,115 @@ class _CartScreenState extends State<CartScreen> {
             child: Stack(
               children: [
                 SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ...cart.cart.map(
-                          (product) => Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Card(
-                              child: Row(
-                                // crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(8),
-                                    padding: EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: Border.all(
-                                        width: 1,
-                                        color: Colors.black12,
-                                      ),
-                                    ),
-                                    child: Image.asset(
-                                      product.image,
-                                      fit: BoxFit.cover,
-                                      width: 50,
-                                      height: 50,
+                  padding: EdgeInsets.only(bottom: 120, top: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ...cart.cart.map(
+                        (product) => Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Card(
+                            margin: EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Colors.black12,
                                     ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  child: Image.asset(
+                                    product.image,
+                                    fit: BoxFit.cover,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        product.name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: '₱ ${product.price}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Container(
+                                  margin: EdgeInsets.only(right: 4),
+                                  padding: EdgeInsets.only(
+                                    right: 4,
+                                    top: 2,
+                                    bottom: 2,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      SizedBox(
-                                        width: 200,
-                                        child: Text(
-                                          product.name,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
+                                      InkWell(
+                                        onTap: () {
+                                          cart.addToCart(
+                                            product,
+                                            product.stock,
+                                          );
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 20,
+                                            color: Colors.red,
                                           ),
                                         ),
                                       ),
-                                      RichText(
-                                        text: TextSpan(
-                                          text: '₱ ${product.price}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25,
-                                            color: Colors.black,
+                                      SizedBox(height: 1),
+                                      Text(
+                                        product.quantity.toString(),
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          cart.removeItem(product.id);
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 20,
+                                            color: Colors.red,
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Spacer(),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      right: 4,
-                                      top: 2,
-                                      bottom: 2,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            cart.addToCart(
-                                              product,
-                                              product.stock,
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.all(4),
-                                            child: Icon(
-                                              Icons.add,
-                                              size: 20,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 1),
-                                        Text(
-                                          product.quantity.toString(),
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            cart.removeItem(product.id);
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.all(4),
-                                            child: Icon(
-                                              Icons.remove,
-                                              size: 20,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -181,7 +173,7 @@ class _CartScreenState extends State<CartScreen> {
                                     '₱ ${cart.totalAmount == 0 ? 0 : cart.totalAmount.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 30,
+                                  fontSize: 18,
                                   color: Colors.black,
                                 ),
                               ),

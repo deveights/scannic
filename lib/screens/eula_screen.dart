@@ -13,6 +13,7 @@ class EulaScreen extends StatefulWidget {
 class _EulaScreenState extends State<EulaScreen> {
   InAppWebViewController? webViewController;
   bool _isAtBottom = false;
+  bool isLoading = false;
 
   String eulaHtml = """  
   <html>
@@ -39,8 +40,15 @@ class _EulaScreenState extends State<EulaScreen> {
   """;
 
   Future<void> _acceptEula() async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 1));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool("accepted_eula", true);
+    setState(() {
+      isLoading = false;
+    });
     Navigator.pop(context); // Close the screen
   }
 
@@ -71,7 +79,13 @@ class _EulaScreenState extends State<EulaScreen> {
             child: ElevatedButton(
               onPressed:
                   _isAtBottom ? _acceptEula : null, // Disable until scrolled
-              child: Text("Accept"),
+              child:
+                  isLoading
+                      ? Transform.scale(
+                        scale: 0.6,
+                        child: CircularProgressIndicator(color: Colors.white),
+                      )
+                      : Text("Accept"),
             ),
           ),
         ],
