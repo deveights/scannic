@@ -49,64 +49,64 @@ class ItemDetailsScreen extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                color: Colors.white70,
-                padding: EdgeInsets.all(8),
-                child: Image.asset(product.image, height: 300),
-              ),
-              SizedBox(height: 12),
-              Row(
-                children: [
-                  Text(
-                    product.name,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    overflow: TextOverflow.clip,
-                  ),
-                  Spacer(),
-                  Text.rich(
-                    TextSpan(
-                      text: '₱${product.price}',
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  color: Colors.white70,
+                  padding: EdgeInsets.all(8),
+                  child: Image.asset(product.image, height: 300),
+                ),
+                SizedBox(height: 12),
+                Row(
+                  children: [
+                    Text(
+                      product.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
+                      overflow: TextOverflow.clip,
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12),
-              Text(
-                'Code: ${product.id}',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                  color: Colors.grey,
+                    Spacer(),
+                    Text.rich(
+                      TextSpan(
+                        text: '₱${product.price}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Spacer(),
-              Consumer<CartProvider>(
-                builder: (context, cart, child) {
-                  return ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      cart.addToCart(product, product.stock);
-                    },
-                    child: Text(
-                      'Add to cart',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16),
-            ],
+                SizedBox(height: 12),
+                Text(
+                  'Code: ${product.id}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: Colors.grey,
+                  ),
+                ),
+                Spacer(),
+                Consumer<CartProvider>(
+                  builder: (context, cart, child) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        cart.addToCart(product, product.stock);
+                      },
+                      child: Text(
+                        'Add to cart',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),

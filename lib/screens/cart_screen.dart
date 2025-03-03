@@ -3,8 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
 import 'package:scannic/screens/success_screen.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +81,7 @@ class CartScreen extends StatelessWidget {
                                           text: '₱ ${product.price}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 30,
+                                            fontSize: 25,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -183,11 +190,6 @@ class CartScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(size.width, 50),
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                          ),
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -195,7 +197,13 @@ class CartScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Text('Checkout'),
+                          child:
+                              isLoading
+                                  ? Transform.scale(
+                                    scale: 0.6,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                  : Text('Checkout'),
                         ),
                       ],
                     ),

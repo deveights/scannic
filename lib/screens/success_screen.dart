@@ -4,8 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
 import 'package:scannic/widgets/custom_navbar.dart';
 
-class SuccessScreen extends StatelessWidget {
+class SuccessScreen extends StatefulWidget {
   const SuccessScreen({super.key});
+
+  @override
+  State<SuccessScreen> createState() => _SuccessScreenState();
+}
+
+class _SuccessScreenState extends State<SuccessScreen> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,36 +39,55 @@ class SuccessScreen extends StatelessWidget {
                       text: '₱ ${total.totalAmount}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                        fontSize: 25,
                         color: Colors.black,
                       ),
                     ),
                   );
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
+              Text(
+                'Order Placed Successfully!',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              ),
               Center(
                 child: SizedBox(
                   width: 250,
                   child: Text(
-                    'Order Placed Successfully! Thank you for your order! Your order has been successfully placed and is now being processed.',
+                    'Your order has been successfully placed and is now being processed.',
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
               SizedBox(height: 25),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => CustomNavbar()),
-                  );
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+
+                  Provider.of<CartProvider>(context, listen: false).clearCart();
+
+                  await Future.delayed(Duration(seconds: 2));
+
+                  if (context.mounted) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => CustomNavbar()),
+                    );
+                  }
+
+                  setState(() {
+                    isLoading = false;
+                  });
                 },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(size.width, 50),
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                ),
-                child: Text('Continue Shopping'),
+                child:
+                    isLoading
+                        ? Transform.scale(
+                          scale: 0.6,
+                          child: CircularProgressIndicator(color: Colors.white),
+                        )
+                        : Text('Continue Shopping'),
               ),
             ],
           ),
