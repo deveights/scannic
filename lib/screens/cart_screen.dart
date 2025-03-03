@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
+import 'package:scannic/screens/success_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -181,7 +182,11 @@ class CartScreen extends StatelessWidget {
                             foregroundColor: Colors.white,
                           ),
                           onPressed: () {
-                            debugPrint('checkout');
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SuccessScreen(),
+                              ),
+                            );
                           },
                           child: Text('Checkout'),
                         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
+import 'package:scannic/screens/success_screen.dart';
 import 'package:scannic/widgets/custom_navbar.dart';
 
 void main() {
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       ),
-      home: CustomNavbar(),
+      // home: CustomNavbar(),
+      home: SuccessScreen(),
     );
   }
 }
