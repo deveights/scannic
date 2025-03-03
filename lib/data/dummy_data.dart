@@ -65,4 +65,12 @@ const dummyData = [
     quantity: 0,
     stock: 35,
   ),
+  Product(
+    id: '4803746881089',
+    name: 'White Dove Baby Powder 200g',
+    price: 150,
+    image: 'assets/images/white_dove.png',
+    quantity: 0,
+    stock: 50,
+  ),
 ];

@@ -19,7 +19,7 @@ class CartProvider with ChangeNotifier {
       if (newQuantity <= stock) {
         cart[index] = cart[index].copyWith(quantity: newQuantity);
       } else {
-        print('Stock Limit Reached');
+        debugPrint('Stock Limit Reached');
       }
     } else {
       //if item doesnt exist, add with quantity = 1
@@ -35,7 +35,7 @@ class CartProvider with ChangeNotifier {
           ),
         );
       } else {
-        print('Out Of Stock!');
+        debugPrint('Out Of Stock!');
       }
     }
     notifyListeners();
