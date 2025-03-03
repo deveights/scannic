@@ -14,16 +14,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String scannedText = "Scan a Barcode";
 
-  MobileScannerController controller = MobileScannerController();
+  MobileScannerController controller = MobileScannerController(
+    formats: [BarcodeFormat.all],
+    detectionSpeed: DetectionSpeed.noDuplicates,
+  );
 
   @override
   void initState() {
-    controller = MobileScannerController(
-      formats: [BarcodeFormat.all],
-      detectionSpeed: DetectionSpeed.noDuplicates,
-    );
-    controller.start();
     super.initState();
+    controller.start();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 
   @override
@@ -38,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             MobileScanner(
               fit: BoxFit.cover,
               controller: controller,
-              onDetect: (BarcodeCapture barcode) {
+              onDetect: (BarcodeCapture barcode) async {
                 final String scannedId =
                     barcode.barcodes.map((data) => data.rawValue).join();
 
@@ -54,15 +59,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           (product) => product.id == scannedId,
                         )
                         : null;
+
                 if (scannedProduct != null) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder:
-                          (context) =>
-                              ItemDetailsScreen(product: scannedProduct),
-                    ),
-                  );
+                  await Future.delayed(Duration(milliseconds: 500))
+                      .then((value) {
+                        if (context.mounted) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => ItemDetailsScreen(
+                                    product: scannedProduct,
+                                  ),
+                            ),
+                          );
+                        }
+                      })
+                      .then((value) => controller.start());
                 }
+                controller.stop();
 
                 if (scannedProduct == null) return;
               },
@@ -77,10 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.all(16),
                 child: Text(
                   textAlign: TextAlign.center,
-                  scannedText,
+                  'Code Scanned: $scannedText',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.white,
                     overflow: TextOverflow.clip,
                   ),
                 ),
