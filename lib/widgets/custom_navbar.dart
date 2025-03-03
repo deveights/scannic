@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scannic/screens/home_screen.dart';
-import 'package:scannic/screens/success_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class CustomNavbar extends StatefulWidget {
