@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:scannic/models/product.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartProvider with ChangeNotifier {
   List<Product> cart = [];
+
+  CartProvider() {
+    _loadCart();
+  }
 
   double get totalAmount =>
       cart.fold(0, (total, item) => total + (item.price * item.quantity));
@@ -11,10 +18,28 @@ class CartProvider with ChangeNotifier {
     return cart.fold(0, (total, item) => total + item.quantity);
   }
 
+  Future<void> _loadCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? cartData = prefs.getString('cart');
+    if (cartData != null) {
+      List<dynamic> decoded = json.decode(cartData);
+      cart = decoded.map((item) => Product.fromJson(item)).toList();
+      notifyListeners();
+    }
+  }
+
+  Future<void> _saveCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String encodedData = json.encode(
+      cart.map((item) => item.toJson()).toList(),
+    );
+    await prefs.setString('cart', encodedData);
+  }
+
   void addToCart(Product product, int stock) {
     int index = cart.indexWhere((prod) => prod.id == product.id);
     if (index != -1) {
-      //if item exists, increase quantity(but not beyond stock)
+      //if item exists, increase quantity(but not more than stock)
       int newQuantity = cart[index].quantity + 1;
       if (newQuantity <= stock) {
         cart[index] = cart[index].copyWith(quantity: newQuantity);
@@ -38,6 +63,7 @@ class CartProvider with ChangeNotifier {
         debugPrint('Out Of Stock!');
       }
     }
+    _saveCart();
     notifyListeners();
   }
 
@@ -53,11 +79,13 @@ class CartProvider with ChangeNotifier {
     } else {
       cart.removeAt(index);
     }
+    _saveCart();
     notifyListeners();
   }
 
   void clearCart() {
     cart.clear();
+    _saveCart();
     notifyListeners();
   }
 }

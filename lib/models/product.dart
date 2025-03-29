@@ -34,4 +34,13 @@ class Product {
     quantity: json['quantity'],
     stock: json['stock'],
   );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'price': price,
+    'image': image,
+    'quantity': quantity,
+    'stock': stock,
+  };
 }
