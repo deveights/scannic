@@ -14,6 +14,14 @@ class ItemDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.of(
+        //       context,
+        //     ).popUntil(ModalRoute.withName(HomeScreen.routeName));
+        //   },
+        //   icon: Icon(Icons.arrow_back),
+        // ),
         actions: [
           Consumer<CartProvider>(
             builder: (context, value, child) {

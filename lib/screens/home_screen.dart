@@ -12,9 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String scannedText = "Scan a Barcode";
+  bool isLoading = false;
+  String scannedText = "Scan a barcode";
 
   MobileScannerController controller = MobileScannerController(
+    autoStart: false,
     formats: [BarcodeFormat.all],
     detectionSpeed: DetectionSpeed.noDuplicates,
   );
@@ -27,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,10 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 final String scannedId =
                     barcode.barcodes.map((data) => data.rawValue).join();
 
-                setState(() {
-                  scannedText = scannedId;
-                });
-
                 final scannedProduct =
                     dummyData
                             .where((product) => product.id == scannedId)
@@ -60,25 +58,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                         : null;
 
-                if (scannedProduct != null) {
-                  await Future.delayed(Duration(milliseconds: 500))
-                      .then((value) {
-                        if (context.mounted) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => ItemDetailsScreen(
-                                    product: scannedProduct,
-                                  ),
-                            ),
-                          );
-                        }
-                      })
-                      .then((value) => controller.start());
-                }
-                controller.stop();
+                if (scannedProduct != null && scannedProduct.id.isNotEmpty) {
+                  setState(() {
+                    controller.stop();
+                    isLoading = true;
+                  });
+                  await Future.delayed(Duration(seconds: 2));
+                  setState(() {
+                    isLoading = false;
+                  });
 
-                if (scannedProduct == null) return;
+                  if (context.mounted) {
+                    Navigator.of(context)
+                        .push(
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    ItemDetailsScreen(product: scannedProduct),
+                          ),
+                        )
+                        .then((_) {
+                          controller.start();
+                        });
+                  }
+                }
               },
             ),
             QRScannerOverlay(
@@ -89,15 +92,18 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(16),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  scannedText,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
+                child:
+                    isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : Text(
+                          textAlign: TextAlign.center,
+                          scannedText,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            overflow: TextOverflow.clip,
+                          ),
+                        ),
               ),
             ),
           ],
