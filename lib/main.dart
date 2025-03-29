@@ -10,6 +10,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool hasAcceptedEULA = prefs.getBool("accepted_eula") ?? false;
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black, // Dark background
+      systemNavigationBarIconBrightness:
+          Brightness.light, // Light icons for contrast
+      systemNavigationBarContrastEnforced: true,
+      systemStatusBarContrastEnforced: true,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
     _,
   ) {

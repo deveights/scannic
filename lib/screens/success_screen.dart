@@ -35,7 +35,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 builder: (context, total, child) {
                   return RichText(
                     text: TextSpan(
-                      text: '₱ ${total.totalAmount}',
+                      text: '₱ ${total.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -71,13 +71,15 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       MaterialPageRoute(builder: (context) => CustomNavbar()),
                       (Route<dynamic> route) => false,
                     );
+                  }
+                  setState(() {
+                    isLoading = false;
+                  });
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
                     Provider.of<CartProvider>(
                       context,
                       listen: false,
                     ).clearCart();
-                  }
-                  setState(() {
-                    isLoading = false;
                   });
                 },
                 child:

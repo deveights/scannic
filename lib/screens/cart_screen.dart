@@ -57,6 +57,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Text(cart.cart.length.toString()),
                                     SizedBox(
                                       width: 200,
                                       child: Text(
@@ -182,13 +183,16 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         Spacer(),
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => SuccessScreen(),
-                              ),
-                            );
-                          },
+                          onPressed:
+                              cart.cart.isEmpty
+                                  ? null
+                                  : () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => SuccessScreen(),
+                                      ),
+                                    );
+                                  },
                           child:
                               isLoading
                                   ? Transform.scale(

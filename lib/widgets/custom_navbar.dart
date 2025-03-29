@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scannic/screens/cart_screen.dart';
 import 'package:scannic/screens/home_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -38,8 +39,8 @@ class _CustomNavbarState extends State<CustomNavbar> {
             backgroundColor: Colors.orange,
           ),
           BottomBarItem(
-            icon: const Icon(Icons.favorite),
-            title: const Text('Favorites'),
+            icon: const Icon(Icons.shopping_cart),
+            title: const Text('My Cart'),
             backgroundColor: Colors.purple,
           ),
           BottomBarItem(
@@ -66,7 +67,7 @@ class _CustomNavbarState extends State<CustomNavbar> {
         children: [
           HomeScreen(),
           Center(child: Text('Recents')),
-          Center(child: Text('Favorites')),
+          CartScreen(),
           Center(child: Text('User Account')),
         ],
       ),

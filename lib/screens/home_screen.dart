@@ -60,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 if (scannedProduct != null && scannedProduct.id.isNotEmpty) {
                   setState(() {
-                    controller.stop();
                     isLoading = true;
                   });
                   await Future.delayed(Duration(seconds: 2));
@@ -81,6 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller.start();
                         });
                   }
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    controller.stop();
+                  });
                 }
               },
             ),
