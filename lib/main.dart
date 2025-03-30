@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
+import 'package:scannic/providers/transaction_provider.dart';
 import 'package:scannic/screens/onboarding_screen.dart';
 import 'package:scannic/widgets/custom_navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +27,10 @@ void main() async {
   ) {
     runApp(
       MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => CartProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => TransactionProvider()),
+        ],
         child: MyApp(showOnboarding: !hasAcceptedEULA),
       ),
     );
@@ -53,6 +57,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.pinkAccent,
           titleTextStyle: TextStyle(
             color: Colors.white,

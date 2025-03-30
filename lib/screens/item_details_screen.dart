@@ -14,14 +14,6 @@ class ItemDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Navigator.of(
-        //       context,
-        //     ).popUntil(ModalRoute.withName(HomeScreen.routeName));
-        //   },
-        //   icon: Icon(Icons.arrow_back),
-        // ),
         actions: [
           Consumer<CartProvider>(
             builder: (context, value, child) {
@@ -73,7 +65,7 @@ class ItemDetailsScreen extends StatelessWidget {
                       product.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 15,
                       ),
                       overflow: TextOverflow.clip,
                     ),
@@ -83,7 +75,7 @@ class ItemDetailsScreen extends StatelessWidget {
                         text: '₱${product.price}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 15,
                         ),
                       ),
                     ),

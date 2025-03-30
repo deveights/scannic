@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:scannic/models/product.dart';
+import 'package:scannic/providers/transaction_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartProvider with ChangeNotifier {
@@ -80,6 +81,13 @@ class CartProvider with ChangeNotifier {
       cart.removeAt(index);
     }
     _saveCart();
+    notifyListeners();
+  }
+
+  void checkout(TransactionProvider transactionProvider) {
+    if (cart.isEmpty) return;
+
+    transactionProvider.addTransaction(cart, totalAmount);
     notifyListeners();
   }
 

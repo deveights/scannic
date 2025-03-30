@@ -73,4 +73,12 @@ const dummyData = [
     quantity: 0,
     stock: 50,
   ),
+  Product(
+    id: '4800135003312',
+    name: 'Myra E Whitening Lotion SPF 15 200ml',
+    price: 214,
+    image: 'assets/images/myra.png',
+    quantity: 0,
+    stock: 123,
+  ),
 ];

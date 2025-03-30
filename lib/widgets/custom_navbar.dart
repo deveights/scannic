@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scannic/screens/cart_screen.dart';
 import 'package:scannic/screens/home_screen.dart';
+import 'package:scannic/screens/transaction_history_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class CustomNavbar extends StatefulWidget {
@@ -35,7 +36,7 @@ class _CustomNavbarState extends State<CustomNavbar> {
           ),
           BottomBarItem(
             icon: const Icon(Icons.book),
-            title: const Text('Recents'),
+            title: const Text('History'),
             backgroundColor: Colors.orange,
           ),
           BottomBarItem(
@@ -66,7 +67,7 @@ class _CustomNavbarState extends State<CustomNavbar> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           HomeScreen(),
-          Center(child: Text('Recents')),
+          TransactionHistoryScreen(),
           CartScreen(),
           Center(child: Text('User Account')),
         ],
