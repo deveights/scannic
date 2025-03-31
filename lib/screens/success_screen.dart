@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:scannic/providers/cart_provider.dart';
-import 'package:scannic/providers/transaction_provider.dart';
 import 'package:scannic/widgets/custom_navbar.dart';
 
 class SuccessScreen extends StatefulWidget {
@@ -72,12 +71,6 @@ class _SuccessScreenState extends State<SuccessScreen> {
                           ),
                           (Route<dynamic> route) => false,
                         );
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   Provider.of<CartProvider>(
-                        //     context,
-                        //     listen: false,
-                        //   ).clearCart();
-                        // });
                       }
                       setState(() {
                         isLoading = false;
