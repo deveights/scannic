@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scannic/screens/cart_screen.dart';
 import 'package:scannic/screens/home_screen.dart';
+import 'package:scannic/screens/item_screen.dart';
 import 'package:scannic/screens/transaction_history_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -69,7 +70,8 @@ class _CustomNavbarState extends State<CustomNavbar> {
           HomeScreen(),
           TransactionHistoryScreen(),
           CartScreen(),
-          Center(child: Text('User Account')),
+          // Center(child: Text('User Account')),
+          ItemScreen(),
         ],
       ),
     );

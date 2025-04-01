@@ -91,6 +91,13 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // void checkout() {
+  //   if (cart.isEmpty) return;
+
+  //   transactionProvider.addTransaction(cart, totalAmount);
+  //   notifyListeners();
+  // }
+
   void clearCart() {
     cart.clear();
     _saveCart();

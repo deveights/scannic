@@ -15,10 +15,14 @@ class TransactionProvider with ChangeNotifier {
 
   Future<void> _initPrefs() async {
     _prefs = await SharedPreferences.getInstance();
-    _loadTransactions();
+    if (_prefs == null) {
+      return;
+    }
+    _prefs!.getString('transactions');
+    await _loadTransactions();
   }
 
-  void _loadTransactions() {
+  Future<void> _loadTransactions() async {
     final String? data = _prefs?.getString('transactions');
     if (data != null) {
       List<dynamic> decoded = json.decode(data);

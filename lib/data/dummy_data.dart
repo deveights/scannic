@@ -81,4 +81,12 @@ const dummyData = [
     quantity: 0,
     stock: 123,
   ),
+  Product(
+    id: '4800552073028',
+    name: 'Hard Copy Letter 500 Sheets',
+    price: 290,
+    image: 'assets/images/hard_copy_letter.png',
+    quantity: 0,
+    stock: 99,
+  ),
 ];

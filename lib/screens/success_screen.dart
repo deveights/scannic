@@ -35,7 +35,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   ),
                   RichText(
                     text: TextSpan(
-                      text: '₱ ${cartProvider.totalAmount}',
+                      text: '₱ ${cartProvider.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -71,6 +71,12 @@ class _SuccessScreenState extends State<SuccessScreen> {
                           ),
                           (Route<dynamic> route) => false,
                         );
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Provider.of<CartProvider>(
+                            context,
+                            listen: false,
+                          ).clearCart();
+                        });
                       }
                       setState(() {
                         isLoading = false;
