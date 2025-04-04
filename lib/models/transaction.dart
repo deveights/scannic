@@ -2,9 +2,9 @@ import 'package:scannic/models/product.dart';
 
 class Transaction {
   final String id;
-  final List<Product> items;
+  List<Product> items;
   final double totalAmount;
-  final DateTime? date;
+  final DateTime date;
 
   Transaction({
     required this.id,
@@ -13,17 +13,29 @@ class Transaction {
     required this.date,
   });
 
-  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
-    id: json['id'],
-    items: json['items'],
-    totalAmount: json['totalAmount'],
-    date: json["date"] == null ? null : DateTime.parse(json["date"]),
-  );
+  // Convert Transaction object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'items':
+          items
+              .map((product) => product.toJson())
+              .toList(), // Convert Products to JSON
+      'totalAmount': totalAmount,
+      'date': date.toIso8601String(),
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'items': items,
-    'totalAmount': totalAmount,
-    'date': date?.toIso8601String(),
-  };
+  // Convert JSON to Transaction object
+  factory Transaction.fromJson(Map<String, dynamic> json) {
+    return Transaction(
+      id: json['id'],
+      items:
+          (json['items'] as List)
+              .map((item) => Product.fromJson(item as Map<String, dynamic>))
+              .toList(), // Ensure correct type conversion
+      totalAmount: (json['totalAmount'] as num).toDouble(),
+      date: DateTime.parse(json['date']),
+    );
+  }
 }

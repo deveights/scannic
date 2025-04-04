@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scannic/providers/cart_provider.dart';
 import 'package:scannic/providers/transaction_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:scannic/screens/cart_screen.dart';
 import 'package:scannic/screens/item_details_screen.dart';
 
 class TransactionHistoryScreen extends StatelessWidget {
@@ -12,6 +14,7 @@ class TransactionHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transactions = Provider.of<TransactionProvider>(context).transactions;
+    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(title: Text('Transactions')),
       body: ListView.builder(
@@ -60,7 +63,14 @@ class TransactionHistoryScreen extends StatelessWidget {
                 SizedBox(height: 8),
                 TextButton(
                   onPressed: () {
-                    print(item.length);
+                    for (var items in item) {
+                      cartProvider.addToCart(items, items.stock);
+                    }
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => CartScreen()),
+                      );
+                    });
                   },
                   child: Text('Order Again'),
                 ),

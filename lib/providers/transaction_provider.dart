@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scannic/models/product.dart';
 import 'package:scannic/models/transaction.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionProvider with ChangeNotifier {
   List<Transaction> transactions = [];
@@ -18,7 +17,6 @@ class TransactionProvider with ChangeNotifier {
     if (_prefs == null) {
       return;
     }
-    _prefs!.getString('transactions');
     await _loadTransactions();
   }
 
@@ -42,7 +40,7 @@ class TransactionProvider with ChangeNotifier {
   void addTransaction(List<Product> cartItems, double total) {
     final transaction = Transaction(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      items: List.from(cartItems), // Create a copy of the cart
+      items: List<Product>.from(cartItems), // Ensure proper type
       totalAmount: total,
       date: DateTime.now(),
     );

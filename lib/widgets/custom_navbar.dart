@@ -3,6 +3,7 @@ import 'package:scannic/screens/cart_screen.dart';
 import 'package:scannic/screens/home_screen.dart';
 import 'package:scannic/screens/item_screen.dart';
 import 'package:scannic/screens/transaction_history_screen.dart';
+import 'package:scannic/screens/user_screen.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class CustomNavbar extends StatefulWidget {
@@ -70,8 +71,9 @@ class _CustomNavbarState extends State<CustomNavbar> {
           HomeScreen(),
           TransactionHistoryScreen(),
           CartScreen(),
+          UserScreen(),
           // Center(child: Text('User Account')),
-          ItemScreen(),
+          // ItemScreen(),
         ],
       ),
     );
